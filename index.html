@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pokémon Catching Game</title>
+  <style>
+    body {
+      text-align: center;
+      font-family: Arial, sans-serif;
+    }
+  </style>
+</head>
+<body>
+
+<h1>Pokémon Catching Game</h1>
+
+<button onclick="goThroughGrass()">Go through grass</button>
+<button onclick="showCaughtPokemons()">View Caught Pokémons</button>
+<button onclick="resetGame()">Reset Game</button>
+
+<p id="gameMessage"></p>
+
+<script>
+  let pokemonList = ["Pikachu", "Bulbasaur", "Charmander", "Squirtle"];
+  let caughtPokemons = [];
+
+  function goThroughGrass() {
+    document.getElementById("gameMessage").innerText = "";
+    
+    if (Math.random() < 0.5) { // 50% chance of spawning a Pokémon
+      let randomPokemon = pokemonList[Math.floor(Math.random() * pokemonList.length)];
+      document.getElementById("gameMessage").innerText = `A wild ${randomPokemon} appeared!`;
+      document.getElementById("gameMessage").innerHTML += "<button onclick='throwPokeball(\"" + randomPokemon + "\")'>Throw Pokeball</button>";
+    } else {
+      document.getElementById("gameMessage").innerText = "No Pokémon in the grass. Try again!";
+    }
+  }
+
+  function throwPokeball(pokemon) {
+    if (Math.random() < 0.75) { // 75% chance of catching the Pokémon
+      caughtPokemons.push(pokemon);
+      document.getElementById("gameMessage").innerText = `${pokemon} was caught!`;
+    } else {
+      document.getElementById("gameMessage").innerText = `${pokemon} escaped! Try again.`;
+    }
+  }
+
+  function showCaughtPokemons() {
+    if (caughtPokemons.length === 0) {
+      document.getElementById("gameMessage").innerText = "You haven't caught any Pokémon yet.";
+    } else {
+      document.getElementById("gameMessage").innerText = "Caught Pokémons: " + caughtPokemons.join(", ");
+    }
+  }
+
+  function resetGame() {
+    document.getElementById("gameMessage").innerText = "";
+    caughtPokemons = [];
+  }
+</script>
+
+</body>
+</html>
